@@ -5,7 +5,6 @@ export default function App() {
 
   const[data,setData] = useState({})
   const[location, setLocation] = useState('')
-  const[date,setDate] = useState(new Date());
 
   const url =`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=7cd2eeeb7260f2e7c568ace6cbcf0ac6`
   
@@ -46,7 +45,7 @@ export default function App() {
             {data.weather ? <p className='text'>{data.weather[0].description}</p>:null}    
             </div>
           </div>
-          {data.name != undefined
+          {data.name !== undefined
           &&
           <div className='bottom'>
             <div className='feels'>
