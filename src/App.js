@@ -4,50 +4,43 @@ import axios from "axios";
 export default function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
-  const [date, setDate] = useState(new Date().toLocaleString() + "");
-  let img ="";
+  const [date] = useState(new Date().toLocaleString() + "");
+  let img;
+
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=7cd2eeeb7260f2e7c568ace6cbcf0ac6`;
 
-  const[location, setLocation] = useState('')
-
-  const url =`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=7cd2eeeb7260f2e7c568ace6cbcf0ac6`
-  
-   const searchLocation = (event) =>{
-
-    if(event.key === 'Enter'){
-      axios.get(url).then((response) =>{
-        setData(response.data)
-        console.log(response.data)
-  img = data.weather ? (img = data.weather[0].icon) : null;
-  let fullurl = `https://openweathermap.org/img/wn/${img}.png`;
+  let fullurl;
 
   const searchLocation = (event) => {
     if (event.key === "Enter") {
-      axios.get(url)
-      .then((response) => {
-        setData(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // Error
-        if (error.response) {
+      axios
+        .get(url)
+        .then((response) => {
+          setData(response.data);
+          console.log(response.data);
+          img = data.weather ? (img = data.weather[0].icon) : null;
+          fullurl = `https://openweathermap.org/img/wn/${img}.png`;
+        })
+        .catch((error) => {
+          // Error
+          if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
             // console.log(error.response.data);
             // console.log(error.response.status);
             // console.log(error.response.headers);
-        } else if (error.request) {
+          } else if (error.request) {
             // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the 
+            // `error.request` is an instance of XMLHttpRequest in the
             // browser and an instance of
             // http.ClientRequest in node.js
             console.log(error.request);
-        } else {
+          } else {
             // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-        }
-        console.log(error.config);
-    });
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
       setLocation("");
     }
   };
@@ -68,11 +61,13 @@ export default function App() {
       <div className="container">
         <div className="top">
           <div className="location">
-            {data.name != undefined && <p>{date}</p>}
+            {data.name !== undefined && <p>{date}</p>}
             <p>{data.name}</p>
           </div>
           <div className="symbol">
-            {data.weather ? <img src={fullurl} className="icon"></img> : null}
+            {data.weather ? (
+              <img src={fullurl} alt="" className="icon"></img>
+            ) : null}
           </div>
           <div className="temp">
             {data.main ? <h1>{data.main.temp.toFixed()}°C</h1> : null}
@@ -86,12 +81,15 @@ export default function App() {
             ) : null}
           </div>
         </div>
-        {data.name != undefined && (
+        {data.name !== undefined && (
           <div className="bottom">
             <div className="feels">
               {data.main ? (
                 <p className="bold">{data.main.feels_like.toFixed()}°C</p>
               ) : null}
+              <p className="label">Feels Like</p>
+            </div>
+            <div className="humidity">
               {data.main ? (
                 <p className="bold">{data.main.humidity} %</p>
               ) : null}
