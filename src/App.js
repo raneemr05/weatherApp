@@ -8,6 +8,17 @@ export default function App() {
   let img ="";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=7cd2eeeb7260f2e7c568ace6cbcf0ac6`;
 
+  const[data,setData] = useState({})
+  const[location, setLocation] = useState('')
+
+  const url =`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=7cd2eeeb7260f2e7c568ace6cbcf0ac6`
+  
+   const searchLocation = (event) =>{
+
+    if(event.key === 'Enter'){
+      axios.get(url).then((response) =>{
+        setData(response.data)
+        console.log(response.data)
   img = data.weather ? (img = data.weather[0].icon) : null;
   let fullurl = `https://openweathermap.org/img/wn/${img}.png`;
 
@@ -76,7 +87,7 @@ export default function App() {
             ) : null}
           </div>
         </div>
-        {data.name != undefined && (
+        {data.name !== undefined && (
           <div className="bottom">
             <div className="feels">
               {data.main ? (
