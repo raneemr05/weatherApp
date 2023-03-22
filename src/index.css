@@ -63,8 +63,8 @@ h1{
   transform-origin: 0 0;
   transform:  rotate(270deg);
 }
-.app .desc .text{
-  text-align: center;
+.symbol .icon{
+  width: 14%;
 }
 .app .title{
   display: flex;
